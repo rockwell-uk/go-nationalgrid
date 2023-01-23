@@ -3,16 +3,16 @@ package nationalgrid
 import (
 	"fmt"
 
-	geos "github.com/rockwell-uk/go-geos"
+	geos "github.com/twpayne/go-geos"
 )
 
 type Quadrant string
 
 const (
 	NE Quadrant = "NE"
-	NW          = "NW"
-	SE          = "SE"
-	SW          = "SW"
+	NW Quadrant = "NW"
+	SE Quadrant = "SE"
+	SW Quadrant = "SW"
 )
 
 func (l Quadrant) String() string {

@@ -16,7 +16,7 @@ import (
 	"github.com/rockwell-uk/go-geom/geom"
 	"github.com/rockwell-uk/go-text/fonts"
 
-	geos "github.com/rockwell-uk/go-geos"
+	geos "github.com/twpayne/go-geos"
 
 	"github.com/llgcode/draw2d"
 	"github.com/llgcode/draw2d/draw2dimg"
@@ -412,7 +412,8 @@ func TestDrawSquares(t *testing.T) {
 	m, gc := setupImage(imgWidth, imgHeight)
 
 	fontSize := 10.0
-	setFont(gc, fontSize)
+	typeFace := getTypeFace(gc, fontSize)
+	fonts.SetFont(gc, typeFace)
 
 	tileSize := SquareSize / 1000
 
@@ -438,17 +439,22 @@ func TestDrawSquares(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+		err = geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+		if err != nil {
+			t.Fatal(err)
+		}
 
-		face := fonts.GetFace(gc, fontData, fontSize)
-		textWidth := fonts.GetTextWidth(face, label)
+		textWidth := fonts.GetTextWidth(typeFace, label)
 
 		labelPos := []float64{
 			xPos + (SquareSize * 5 / 10000) - textWidth/2,
 			yPos + (SquareSize * 5 / 10000),
 		}
 
-		geom.DrawString(gc, labelPos, textRotation, label)
+		err = geom.DrawString(gc, labelPos, textRotation, label)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 
 	//draw the image
@@ -471,10 +477,10 @@ func TestDrawSubSectors(t *testing.T) {
 	m, gc := setupImage(imgWidth, imgHeight)
 
 	fontSize := 30.0
-	setFont(gc, fontSize)
-	face := fonts.GetFace(gc, fontData, fontSize)
-	fm := fonts.GetFaceMetrics(face)
-	textWidth := fonts.GetTextWidth(face, sectorName)
+	typeFace := getTypeFace(gc, fontSize)
+	fonts.SetFont(gc, typeFace)
+	fm := fonts.GetFaceMetrics(typeFace)
+	textWidth := fonts.GetTextWidth(typeFace, sectorName)
 
 	tileSize := SquareSize / 100
 
@@ -507,20 +513,26 @@ func TestDrawSubSectors(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+	err = geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	labelPos := []float64{
 		xPos + (SquareSize * 5 / 1000) - textWidth/2,
 		yPos + (SquareSize * 5 / 1000) + ((fm.Ascent - fm.Descent) / 2),
 	}
 
-	geom.DrawString(gc, labelPos, textRotation, sectorName)
+	err = geom.DrawString(gc, labelPos, textRotation, sectorName)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	//subsectors
 	fontSize = 10.0
-	setFont(gc, fontSize)
-	face = fonts.GetFace(gc, fontData, fontSize)
-	fm = fonts.GetFaceMetrics(face)
+	typeFace = getTypeFace(gc, fontSize)
+	fonts.SetFont(gc, typeFace)
+	fm = fonts.GetFaceMetrics(typeFace)
 
 	for i := 0; i <= 99; i++ {
 
@@ -533,7 +545,7 @@ func TestDrawSubSectors(t *testing.T) {
 		blX := tileX + (float64(addX) * subsectorSize)
 		blY := float64(imgHeight) - subsectorSize - (tileY + (float64(addY) * subsectorSize))
 
-		textWidth := fonts.GetTextWidth(face, bits)
+		textWidth := fonts.GetTextWidth(typeFace, bits)
 
 		g, err := geom.BoundsGeom(
 			blX,
@@ -550,19 +562,60 @@ func TestDrawSubSectors(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+		err = geom.DrawLine(gc, l, lineWidth, fillColor, strokeWidth, strokeColor, scale)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		labelPos := []float64{
 			blX + (subsectorSize / 2) - (textWidth / 2),
 			blY + (subsectorSize / 2) + ((fm.Ascent - fm.Descent) / 2),
 		}
-		geom.DrawString(gc, labelPos, textRotation, bits)
+
+		err = geom.DrawString(gc, labelPos, textRotation, bits)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 
 	//draw the image
 	err = savePNG("test-output/subsectors.png", m)
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestDoOverlap(t *testing.T) {
+	tests := []struct {
+		tl1      []float64
+		br1      []float64
+		tl2      []float64
+		br2      []float64
+		overlaps bool
+	}{
+		{
+			[]float64{0, 2},
+			[]float64{1, 1},
+			[]float64{1, 1},
+			[]float64{0, 2},
+			false,
+		},
+		{
+			[]float64{0, 3},
+			[]float64{2, 1},
+			[]float64{1, 2},
+			[]float64{3, 0},
+			true,
+		},
+	}
+
+	for _, tt := range tests {
+
+		doOverlap := DoOverlap(tt.tl1, tt.br1, tt.tl2, tt.br2)
+
+		if doOverlap != tt.overlaps {
+			t.Fatalf("expected %+v, got %+v", tt.overlaps, doOverlap)
+		}
 	}
 }
 
@@ -576,22 +629,18 @@ func setupImage(width, height int) (*image.RGBA, *draw2dimg.GraphicContext) {
 	return m, gc
 }
 
-func setFont(gc *draw2dimg.GraphicContext, fontSize float64) {
-
+func getTypeFace(gc *draw2dimg.GraphicContext, fontSize float64) fonts.TypeFace {
 	strokeStyle := draw2d.StrokeStyle{
 		Color: white,
-		Width: 1.0,
+		Width: lineWidth,
 	}
-
-	typeFace := fonts.TypeFace{
+	return fonts.TypeFace{
 		StrokeStyle: strokeStyle,
 		Color:       black,
 		Size:        fontSize,
 		FontData:    fontData,
 		Face:        fonts.GetFace(gc, fontData, fontSize),
 	}
-
-	fonts.SetFont(gc, typeFace)
 }
 
 func savePNG(fname string, m image.Image) error {
@@ -607,7 +656,10 @@ func savePNG(fname string, m image.Image) error {
 	}
 	defer f.Close()
 
-	draw2dimg.SaveToPngFile(fname, m)
+	err = draw2dimg.SaveToPngFile(fname, m)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

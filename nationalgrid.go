@@ -8,7 +8,7 @@ import (
 
 	"github.com/rockwell-uk/go-geom/geom"
 
-	geos "github.com/rockwell-uk/go-geos"
+	geos "github.com/twpayne/go-geos"
 )
 
 var (
@@ -250,7 +250,7 @@ func ParseGridRef(ref string) (GridRef, error) {
 	return g, fmt.Errorf("failed to parse %v", ref)
 }
 
-func doOverlap(tl1, br1, tl2, br2 []float64) bool {
+func DoOverlap(tl1, br1, tl2, br2 []float64) bool {
 
 	if tl1[0] == br1[0] || tl1[1] == br1[1] || tl2[0] == br2[0] || tl2[1] == br2[1] {
 		// the line cannot have positive overlap
