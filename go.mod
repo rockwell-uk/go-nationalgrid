@@ -7,7 +7,7 @@ require (
 	github.com/rockwell-uk/go-geos-draw v1.0.0
 	github.com/rockwell-uk/go-text v1.0.0
 	github.com/twpayne/go-geos v0.13.1
-	github.com/wroge/wgs84 v1.1.6
+	github.com/wroge/wgs84 v1.1.7
 )
 
 require (
