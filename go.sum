@@ -6,7 +6,7 @@ github.com/llgcode/draw2d v0.0.0-20210904075650-80aa0a2a901d/go.mod h1:mVa0dA29D
 github.com/llgcode/ps v0.0.0-20150911083025-f1443b32eedb/go.mod h1:1l8ky+Ew27CMX29uG+a2hNOKpeNYEQjjtiALiBlFQbY=
 github.com/rockwell-uk/csync v1.0.0/go.mod h1:3ccKeE7DZjuVCfox0qxipp2WsawKoHwvexz0Q81tuW8=
 github.com/rockwell-uk/go-draw v1.0.0/go.mod h1:wIxz9Nnm3vdR589o6a1nbZkZNRuvSTOPGjyAvHP3tug=
-github.com/rockwell-uk/go-geos-draw v1.0.0 h1:HxctciLX037UUKUpmo6gMKhoGaxOLYkeEPEVJBziJTU=
+github.com/rockwell-uk/go-geos-draw v1.0.0 h1:cPoo4Fe3xWVYpk3G4b+CQLOZ4uWEHLmvNVpH0yo1XdM=
 github.com/rockwell-uk/go-geos-draw v1.0.0/go.mod h1:N5xHULy0ZNLdZuZooJx/JfJCGV+7r4Oeiz4VJYTI5vE=
 github.com/rockwell-uk/go-text v1.0.0/go.mod h1:hVh4K6N/Hh4j3n8ktAzVfbpd+XaQ9pI+0YZAhm9RtN0=
 github.com/twpayne/go-geos v0.13.1/go.mod h1:DdtpdCqA2PDHXN54xgvScmp7p8D0XwS/tvDJsyfBSfU=
