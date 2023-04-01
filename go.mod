@@ -6,7 +6,7 @@ require (
 	github.com/llgcode/draw2d v0.0.0-20210904075650-80aa0a2a901d
 	github.com/rockwell-uk/go-geos-draw v1.0.0
 	github.com/rockwell-uk/go-text v1.0.0
-	github.com/twpayne/go-geos v0.13.1
+	github.com/twpayne/go-geos v0.13.2
 	github.com/wroge/wgs84 v1.1.7
 )
 
