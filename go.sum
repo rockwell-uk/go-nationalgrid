@@ -18,8 +18,8 @@ github.com/rockwell-uk/go-geos-draw v1.0.0 h1:cPoo4Fe3xWVYpk3G4b+CQLOZ4uWEHLmvNV
 github.com/rockwell-uk/go-geos-draw v1.0.0/go.mod h1:+sCDuBJCa0VYmRBlk5fTH+mB+XEJpKT8UQv6h85axV8=
 github.com/rockwell-uk/go-text v1.0.0 h1:IbN9g9sBOV9HPxKgGMS7Xl+jbn3eB5moq0HN+NCuQFg=
 github.com/rockwell-uk/go-text v1.0.0/go.mod h1:hVh4K6N/Hh4j3n8ktAzVfbpd+XaQ9pI+0YZAhm9RtN0=
-github.com/twpayne/go-geos v0.13.1 h1:z9eL6XbkJc/BZhxrKPOeDZN2I/2NXjXWaJ1UA7fDjhc=
-github.com/twpayne/go-geos v0.13.1/go.mod h1:DdtpdCqA2PDHXN54xgvScmp7p8D0XwS/tvDJsyfBSfU=
+github.com/twpayne/go-geos v0.13.2 h1:kyQenUwpU+mGrNX403KNlRDuIIIL22OHVVj1SGfXUm0=
+github.com/twpayne/go-geos v0.13.2/go.mod h1:r5O89NwzDqYqiDF5HnkYjdgJtODwzpjeNlj/gL9ztXk=
 github.com/wroge/wgs84 v1.1.7 h1:8WVUUrpjysYxrn0ssWX7z90SOUKCuHt9NQ5tg9ovjIY=
 github.com/wroge/wgs84 v1.1.7/go.mod h1:mc1F8ubW03DO4zaf/006cmhaiMlfvbKmqVAcPuAtsNA=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
