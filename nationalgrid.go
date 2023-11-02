@@ -86,7 +86,7 @@ func intersects(item *geos.Bounds, target *geos.Bounds) bool {
 	return item.Intersects(target)
 }
 
-func GetGridLatLon(ref string) (float64, float64, error) {
+func GetGridEastNorth(ref string) (float64, float64, error) {
 	var east, north float64
 
 	gridRef, err := ParseGridRef(ref)
